@@ -1,0 +1,447 @@
+/* Performance Optimizations */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Enable hardware acceleration for key elements */
+.puzzle-piece,
+.drop-zone,
+.btn,
+.level-btn {
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+/* Reduce paint and layout thrashing */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: white;
+    overflow-x: hidden;
+    text-rendering: optimizeSpeed;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    contain: layout style;
+}
+
+/* Optimized animations */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    animation: slideDown 0.6s ease-out;
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 2s ease-in-out infinite alternate;
+    margin-bottom: 10px;
+    contain: layout;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 20px;
+}
+
+/* Glass morphism with better performance */
+.game-stats,
+.game-container {
+    background: rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    contain: layout style;
+}
+
+.game-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    margin-bottom: 30px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.game-container {
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Optimized button interactions */
+.level-selector {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.level-btn {
+    background: linear-gradient(45deg, #ff6b6b, #feca57);
+    border: none;
+    border-radius: 25px;
+    padding: 12px 24px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    font-size: 1rem;
+    touch-action: manipulation;
+}
+
+.level-btn:hover {
+    transform: translateY(-2px);
+}
+
+.level-btn:active {
+    transform: translateY(0);
+}
+
+.level-btn.active {
+    background: linear-gradient(45deg, #48dbfb, #ff9ff3);
+    transform: scale(1.05);
+}
+
+/* Puzzle layout optimizations */
+.puzzle-area {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.original-image {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    contain: layout;
+}
+
+.original-image img {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+    object-fit: contain;
+    image-rendering: auto;
+}
+
+.original-label {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* High-performance puzzle grid */
+.puzzle-grid {
+    display: grid;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 15px;
+    min-height: 300px;
+    min-width: 300px;
+    contain: layout;
+}
+
+.pieces-container {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 15px;
+    min-height: 300px;
+    min-width: 250px;
+    contain: layout;
+}
+
+.pieces-label {
+    text-align: center;
+    margin-bottom: 15px;
+    font-weight: bold;
+    opacity: 0.9;
+}
+
+.pieces-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    contain: layout;
+}
+
+/* Ultra-optimized puzzle pieces */
+.puzzle-piece {
+    width: 60px;
+    height: 60px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    cursor: grab;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: none;
+    contain: layout style;
+}
+
+/* Only animate on hover, not during drag */
+.puzzle-piece:hover:not(.dragging) {
+    transform: scale(1.03);
+    transition: transform 0.1s ease;
+}
+
+.puzzle-piece.dragging {
+    cursor: grabbing;
+    transform: scale(1.05);
+    z-index: 1000;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Optimized drop zones */
+.drop-zone {
+    width: 60px;
+    height: 60px;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: none;
+    contain: layout;
+}
+
+.drop-zone.drag-over {
+    border-color: #48dbfb;
+    background: rgba(72, 219, 251, 0.2);
+    transform: scale(1.02);
+}
+
+.drop-zone.filled {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Control buttons */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    background: linear-gradient(45deg, #48dbfb, #ff9ff3);
+    border: none;
+    border-radius: 25px;
+    padding: 12px 30px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    font-size: 1rem;
+    touch-action: manipulation;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Modal optimizations */
+.completion-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    contain: layout;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 400px;
+    width: 90%;
+    animation: modalSlide 0.3s ease;
+}
+
+.completion-emoji {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    animation: bounce 0.6s ease;
+}
+
+.completion-time {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #feca57;
+}
+
+.share-text {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px 0;
+    font-family: monospace;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Optimized keyframe animations */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+@keyframes slideDown {
+    from { 
+        transform: translate3d(0, -30px, 0);
+        opacity: 0;
+    }
+    to { 
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes modalSlide {
+    from { 
+        transform: translate3d(0, 20px, 0);
+        opacity: 0;
+    }
+    to { 
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .logo {
+        font-size: 2rem;
+    }
+    
+    .puzzle-area {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .original-image {
+        order: -1;
+    }
+    
+    .game-container {
+        padding: 20px;
+    }
+    
+    .game-stats {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .level-selector {
+        gap: 10px;
+    }
+    
+    .level-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    /* Optimize mobile interactions */
+    .puzzle-piece {
+        touch-action: none;
+    }
+    
+    .puzzle-piece:hover {
+        transform: none; /* Disable hover on mobile */
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
