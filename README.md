@@ -15,7 +15,7 @@ Solve puzzles, race against the clock, and share your win with friends!
 ---
 
 ## 🚀 Play the Game
-👉 [Link Here](https://Fraeiy.github.io/billions-puzzle)
+👉 [Link Here](https://billions-puzzle.vercel.app/)
 
 ---
 
@@ -23,3 +23,23 @@ Solve puzzles, race against the clock, and share your win with friends!
 1. Clone the repo:
    ```bash
    git clone https://github.com/Fraeiy/billions-puzzle.git
+
+2. Open index.html in your browser.
+(No build tools needed — pure static project)
+
+## 📂 Project Structure
+
+billions-puzzle/
+│── index.html
+│── styles.css
+│── script.js
+│── images/
+│   ├── puzzle1.jpg
+│   ├── puzzle2.png
+│   └── ...
+│── .gitignore
+
+## ❤️ Credits
+
+Made with ❤️ by Fraey
+for Billions Network.
